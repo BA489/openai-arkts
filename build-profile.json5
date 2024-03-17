@@ -1,0 +1,53 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\Codex\\.ohos\\config\\auto_debug_openai_tech.changwei.openai_30086000588777594.cer",
+          "storePassword": "0000001909FB24D925A331501BCC62C03D2F5ED0EF5D3215901440A6E749ECCF7CFB6DA684C6796C6D",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001914824B1092CF439D2E25BF4407D82F46DFACB0A352821FC468B391BF1AAAD0816DD97B5FA1",
+          "profile": "C:\\Users\\Codex\\.ohos\\config\\auto_debug_openai_tech.changwei.openai_30086000588777594.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\Codex\\.ohos\\config\\auto_debug_openai_tech.changwei.openai_30086000588777594.p12"
+        }
+      }
+    ],
+    "compileSdkVersion": 9,
+    "compatibleSdkVersion": 9,
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug",
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "library",
+      "srcPath": "./library"
+    }
+  ]
+}
