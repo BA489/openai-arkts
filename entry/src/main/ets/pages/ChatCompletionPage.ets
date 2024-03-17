@@ -1,6 +1,5 @@
 import { Chat, ChatRole, ChatMessage } from '@changwei/chatui'
-import {  } from '@changwei/openai'
-import { AppConfig } from '../config/AppConfig'
+import { OpenAIConfig } from '../config/AppConfig'
 import {
   ChatCompletionSystemMessageParam,
   ChatCompletionUserMessageParam,
@@ -14,7 +13,7 @@ import {
 @Component
 struct ChatCompletionPage {
   openaiClient: OpenAI = new OpenAI(
-    AppConfig.apiKey
+    OpenAIConfig.apiKey
   )
   messages: IChatCompletionMessageParam[] = [new ChatCompletionSystemMessageParam("You are a helpful assistant.")]
 
@@ -25,10 +24,11 @@ struct ChatCompletionPage {
     Row() {
       Column() {
         Chat({
-          title: 'ChatGPT',
+          title: 'ChatGPT 3.5-turbo',
           needTitleBar: true,
           welcomeMessage: '我是你的测试bot',
           userMessageBackgroundColor: Color.Green,
+          userMessageTextColor:Color.Black,
           botAvatar: $r('app.media.chatgpticon'),
           messageFontSize: 20,
           useMarkdown: true,
@@ -48,7 +48,7 @@ struct ChatCompletionPage {
               {
                 messages: this.messages,
                 stream: streamMode,
-                model: AppConfig.model
+                model:OpenAIConfig.model
               }
             )
               .then((response) => {

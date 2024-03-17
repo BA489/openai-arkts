@@ -54,9 +54,7 @@ class BaseClient {
     this.base_url = base_url
     this.max_retries = max_retries
     this.timeout = timeout
-    if (!custom_query) {
-      custom_query = { "api-version": api_version }
-    }
+
     //let axiosHeaders = new AxiosHeaders();
     // if (custom_headers) {
     //   if (custom_headers) {
@@ -129,7 +127,7 @@ export class AzureOpenAI extends BaseAzureClient {
   azure_deployment: string
 
   constructor(azure_endpoint: string, api_version: string = DEFAULT_VERSION, api_key: string, azure_deployment?: string, max_retries?: number,
-              timeout?: number, custom_headers?: {}, custom_query?: Map<string, string>) {
+              timeout?: number, custom_headers?: {}, custom_query?: {}) {
     let base_url = ""
     if (azure_endpoint) {
       if (azure_deployment) {
@@ -148,6 +146,9 @@ export class AzureOpenAI extends BaseAzureClient {
       custom_headers["api-key"] = api_key
     } else {
       custom_headers = { "api-key": api_key }
+    }
+    if (!custom_query) {
+      custom_query = { "api-version": api_version }
     }
     super(api_key, api_version, base_url, max_retries, timeout, custom_headers, custom_query)
 

@@ -1,6 +1,6 @@
 import { Chat, ChatRole, ChatMessage } from '@changwei/chatui'
 import { AzureOpenAI, ChatCompletionChunk } from '@changwei/openai'
-import { AppConfig } from '../config/AppConfig'
+import { AzureOpenAIConfig } from '../config/AppConfig'
 import List from '@ohos.util.List'
 import {
   ChatCompletionSystemMessageParam,
@@ -14,9 +14,9 @@ import { ChatCompletion } from '@changwei/openai/src/main/ets/ChatCompletion'
 struct Embedding {
   @State embeddingOutput: string = ""
   openaiClient: AzureOpenAI = new AzureOpenAI(
-    AppConfig.Endpoint,
-    AppConfig.apiVersion,
-    AppConfig.apiKey
+    AzureOpenAIConfig.Endpoint,
+    AzureOpenAIConfig.apiVersion,
+    AzureOpenAIConfig.apiKey
   )
   aboutToAppear() {
   }
@@ -30,7 +30,7 @@ struct Embedding {
             .onClick((evt) => {
               this.openaiClient.embeddings.create({
                 input: "test message",
-                model: "embedding"
+                model: "text-embedding-ada-002"
               })
                 .then((response) => {
                   this.embeddingOutput = JSON.stringify(response);

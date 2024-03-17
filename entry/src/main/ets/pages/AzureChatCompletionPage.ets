@@ -1,6 +1,6 @@
 import { Chat, ChatRole, ChatMessage } from '@changwei/chatui'
 import { AzureOpenAI, ChatCompletionChunk } from '@changwei/openai'
-import { AppConfig } from '../config/AppConfig'
+import { AzureOpenAIConfig } from '../config/AppConfig'
 import List from '@ohos.util.List'
 import {
   ChatCompletionSystemMessageParam,
@@ -13,9 +13,9 @@ import { ChatCompletion } from '@changwei/openai/src/main/ets/ChatCompletion'
 @Component
 struct AzureChatCompletionPage {
   openaiClient: AzureOpenAI = new AzureOpenAI(
-    AppConfig.Endpoint,
-    AppConfig.apiVersion,
-    AppConfig.apiKey,
+    AzureOpenAIConfig.Endpoint,
+    AzureOpenAIConfig.apiVersion,
+    AzureOpenAIConfig.apiKey,
   )
   messages: IChatCompletionMessageParam[] = [new ChatCompletionSystemMessageParam("You are a helpful assistant.")]
 
@@ -26,14 +26,15 @@ struct AzureChatCompletionPage {
     Row() {
       Column() {
         Chat({
-          title: 'ChatGPT',
+          title: 'Azure GPT-4',
           needTitleBar: true,
           welcomeMessage: '我是你的测试bot',
-          needBackButton:true,
+          needBackButton: true,
           userMessageBackgroundColor: Color.Green,
+          userMessageTextColor:Color.Black,
           botAvatar: $r('app.media.chatgpticon'),
           messageFontSize: 20,
-          useMarkdown:true,
+          useMarkdown: true,
           onSendMessage: (ctl, message) => {
             //发送用户消息
             ctl.postMessage(message)
@@ -43,13 +44,13 @@ struct AzureChatCompletionPage {
             this.messages.push(
               new ChatCompletionUserMessageParam(message.content, message.name)
             );
-            let streamMode = true;
+            let streamMode = false;
 
             this.openaiClient.chat.completions.create(
               {
                 messages: this.messages,
                 stream: streamMode,
-                model:AppConfig.deploymentName
+                model: AzureOpenAIConfig.deploymentName
               }
             )
               .then((response) => {
@@ -58,7 +59,7 @@ struct AzureChatCompletionPage {
                   let resp = response as ChatCompletionChunk []
                   let output: string = ""
                   for (let chunck of resp) {
-                    if(chunck?.choices[0]?.delta?.content){
+                    if (chunck?.choices[0]?.delta?.content) {
                       output += chunck.choices[0].delta.content as string
                     }
                   }
