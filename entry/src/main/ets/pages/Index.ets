@@ -10,6 +10,12 @@ struct Index {
   build() {
     Row() {
       Column() {
+        Text('OpenAI SDK for HarmonyOS')
+          .width('100%')
+          .height(100)
+          .textAlign(TextAlign.Center)
+          .fontWeight(FontWeight.Bolder)
+          .fontSize(30)
         Button("OpenAI.com ChatCompletion")
           .width("80%")
           .height(60)

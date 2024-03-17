@@ -1,12 +1,20 @@
 {
   "license": "MIT",
   "devDependencies": {},
-  "author": "",
+  "keywords": [
+    "openai",
+    "chat",
+    "bot",
+    "chatui"
+  ],
+  "author": "ChangweiZhang",
   "name": "@changwei/openai",
   "description": "OpenAI SDK鸿蒙原生版，采用ArkTS编写，支持ChatCompletiong,Embedding等接口实现，调用方式和python SDK一致",
   "main": "Index.ets",
   "version": "0.0.1",
   "dependencies": {
     "@ohos/axios": "^2.1.1"
-  }
+  },
+  "repository": "https://gitee.com/changweizhang/openai-arkts",
+  "homepage": "https://space.bilibili.com/395257724"
 }
