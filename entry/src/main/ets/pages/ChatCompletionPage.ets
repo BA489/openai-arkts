@@ -1,13 +1,14 @@
 import { Chat, ChatRole, ChatMessage } from '@changwei/chatui'
-import { ChatCompletionChunk, OpenAI } from '@changwei/openai'
+import {  } from '@changwei/openai'
 import { AppConfig } from '../config/AppConfig'
-import List from '@ohos.util.List'
 import {
   ChatCompletionSystemMessageParam,
   ChatCompletionUserMessageParam,
-  IChatCompletionMessageParam
-} from '@changwei/openai/src/main/ets/ChatCompletionMessageParam'
-import { ChatCompletion } from '@changwei/openai/src/main/ets/ChatCompletion'
+  IChatCompletionMessageParam,
+  ChatCompletionChunk,
+  OpenAI,
+  ChatCompletion
+} from '@changwei/openai'
 
 @Entry
 @Component
@@ -30,8 +31,8 @@ struct ChatCompletionPage {
           userMessageBackgroundColor: Color.Green,
           botAvatar: $r('app.media.chatgpticon'),
           messageFontSize: 20,
-          useMarkdown:true,
-          needBackButton:true,
+          useMarkdown: true,
+          needBackButton: true,
           onSendMessage: (ctl, message) => {
             //发送用户消息
             ctl.postMessage(message)
@@ -47,7 +48,7 @@ struct ChatCompletionPage {
               {
                 messages: this.messages,
                 stream: streamMode,
-                model:AppConfig.model
+                model: AppConfig.model
               }
             )
               .then((response) => {
@@ -56,7 +57,7 @@ struct ChatCompletionPage {
                   let resp = response as ChatCompletionChunk []
                   let output: string = ""
                   for (let chunck of resp) {
-                    if(chunck?.choices[0]?.delta?.content){
+                    if (chunck?.choices[0]?.delta?.content) {
                       output += chunck.choices[0].delta.content as string
                     }
                   }
