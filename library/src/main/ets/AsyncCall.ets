@@ -132,8 +132,8 @@ export class Completions {
     return new Promise<ChatCompletion | ChatCompletionChunk[]>((resolve, reject) => {
 
       let url: string = null
-      if (data.model && this._client.baseURL.indexOf("openai.azure.com") >= 0 && !this._client.baseURL.endsWith(data.model)) {
-        url = `${this._client.baseURL}/deployments/${data.model}/chat/completions${Completions.encodeUrlParams(this._client.params)}}`
+      if (data.model && this._client.baseURL?.indexOf("openai.azure.com") >= 0 && !this._client.baseURL.endsWith(data.model)) {
+        url = `${this._client.baseURL}/deployments/${data.model}/chat/completions${Completions.encodeUrlParams(this._client.params)}`
       } else {
         url = `${this._client.baseURL}/chat/completions${Completions.encodeUrlParams(this._client.params)}`
       }
@@ -143,20 +143,20 @@ export class Completions {
       }
 
       let jsonStr = Completions.parseDataToJson(data);
-      axios.request<string, AxiosResponse<string>>({
+      axios.request<string|ChatCompletion, AxiosResponse<string|ChatCompletion>>({
         method: "post",
         url: url,
         data: jsonStr,
         headers: this._client.headers,
         timeout: timeout * 1000
       })
-        .then((response: AxiosResponse<string>) => {
+        .then((response: AxiosResponse<string|ChatCompletion>) => {
           console.info(JSON.stringify(response));
           let respMsgs: ChatCompletionChunk[] = []
 
           if (response.headers['content-type'] == 'text/event-stream') {
             // console.info(JSON.stringify(response));
-            for (const line of response.data.split(/[\r\n]+/)) {
+            for (const line of (response.data as string).split(/[\r\n]+/)) {
               // console.log(line);
               let msgJson = line.split("data:")[1]
               if (msgJson.indexOf("[DONE]") >= 0) {
@@ -167,7 +167,7 @@ export class Completions {
             resolve(respMsgs)
           }
           else {
-            let respData: ChatCompletion = JSON.parse(response.data)
+            let respData: ChatCompletion = (response.data as ChatCompletion)
             resolve(respData)
           }
 

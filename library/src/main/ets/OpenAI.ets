@@ -45,7 +45,6 @@ class BaseClient {
   chat: Chat
   embeddings: Embeddings
 
-
   //_strict_response_validation: bool,
 
   constructor(api_key: string, api_version: string = DEFAULT_VERSION, base_url: string, max_retries: number = DEFAULT_MAX_RETRIES,
@@ -93,10 +92,10 @@ class BaseClient {
 export class OpenAI extends BaseClient {
   organization?: string
 
-  constructor(api_key: string, organization: string, api_version: string = DEFAULT_VERSION, base_url: string, max_retries: number = DEFAULT_MAX_RETRIES,
-              timeout: number = DEFAULT_TIMEOUT, custom_headers: {} = null, custom_query: Map<string, string> = null) {
+  constructor(api_key: string, organization?: string, base_url?: string, max_retries: number = DEFAULT_MAX_RETRIES,
+              timeout?: number, custom_headers?: {}, custom_query?: Map<string, string>) {
     if (!api_key)
-      console.log("The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable")
+      throw new Error("The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable")
     if (custom_headers) {
       custom_headers["Authorization"] = `Bearer ${api_key}`;
     } else {
@@ -104,13 +103,17 @@ export class OpenAI extends BaseClient {
         "Authorization": `Bearer ${api_key}`
       }
     }
-    super(api_key, api_key, base_url, max_retries, timeout, custom_headers, custom_query)
+    if (!base_url)
+      base_url = "https://api.openai.com/v1"
+    super(api_key, undefined, base_url, max_retries, timeout, custom_headers, custom_query)
 
     this.api_key = api_key
-    this.organization = organization
+    if (organization) {
+      this.organization = organization
+    }
 
-    if (!base_url)
-      this.base_url = "https://api.openai.com/v1"
+
+    this.base_url = base_url
   }
 }
 
@@ -125,8 +128,8 @@ export class AzureOpenAI extends BaseAzureClient {
   azure_endpoint: string
   azure_deployment: string
 
-  constructor(azure_endpoint: string, api_version: string = DEFAULT_VERSION, api_key: string, azure_deployment?: string, max_retries?: number ,
-              timeout?: number, custom_headers?: {} , custom_query?: Map<string, string> ) {
+  constructor(azure_endpoint: string, api_version: string = DEFAULT_VERSION, api_key: string, azure_deployment?: string, max_retries?: number,
+              timeout?: number, custom_headers?: {}, custom_query?: Map<string, string>) {
     let base_url = ""
     if (azure_endpoint) {
       if (azure_deployment) {

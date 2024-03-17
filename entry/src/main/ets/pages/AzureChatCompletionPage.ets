@@ -1,5 +1,5 @@
 import { Chat, ChatRole, ChatMessage } from '@changwei/chatui'
-import { ChatCompletionChunk, OpenAI } from '@changwei/openai'
+import { AzureOpenAI, ChatCompletionChunk } from '@changwei/openai'
 import { AppConfig } from '../config/AppConfig'
 import List from '@ohos.util.List'
 import {
@@ -11,9 +11,11 @@ import { ChatCompletion } from '@changwei/openai/src/main/ets/ChatCompletion'
 
 @Entry
 @Component
-struct ChatCompletionPage {
-  openaiClient: OpenAI = new OpenAI(
-    AppConfig.apiKey
+struct AzureChatCompletionPage {
+  openaiClient: AzureOpenAI = new AzureOpenAI(
+    AppConfig.Endpoint,
+    AppConfig.apiVersion,
+    AppConfig.apiKey,
   )
   messages: IChatCompletionMessageParam[] = [new ChatCompletionSystemMessageParam("You are a helpful assistant.")]
 
@@ -27,11 +29,11 @@ struct ChatCompletionPage {
           title: 'ChatGPT',
           needTitleBar: true,
           welcomeMessage: '我是你的测试bot',
+          needBackButton:true,
           userMessageBackgroundColor: Color.Green,
           botAvatar: $r('app.media.chatgpticon'),
           messageFontSize: 20,
           useMarkdown:true,
-          needBackButton:true,
           onSendMessage: (ctl, message) => {
             //发送用户消息
             ctl.postMessage(message)
@@ -41,13 +43,13 @@ struct ChatCompletionPage {
             this.messages.push(
               new ChatCompletionUserMessageParam(message.content, message.name)
             );
-            let streamMode = false;
+            let streamMode = true;
 
             this.openaiClient.chat.completions.create(
               {
                 messages: this.messages,
                 stream: streamMode,
-                model:AppConfig.model
+                model:AppConfig.deploymentName
               }
             )
               .then((response) => {

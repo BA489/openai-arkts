@@ -10,12 +10,21 @@ struct Index {
   build() {
     Row() {
       Column() {
-        Button("Chat Completion")
+        Button("OpenAI.com ChatCompletion")
           .width("80%")
           .height(60)
           .onClick((evt)=>{
             router.pushUrl({
               url:"pages/ChatCompletionPage"
+            })
+          })
+          .margin(10)
+        Button("Azure OpenAI ChatCompletion")
+          .width("80%")
+          .height(60)
+          .onClick((evt)=>{
+            router.pushUrl({
+              url:"pages/AzureChatCompletionPage"
             })
           })
           .margin(10)
