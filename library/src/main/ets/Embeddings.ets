@@ -1,7 +1,7 @@
 import { Embedding } from './Embedding';
 import { RequestConfig } from './OpenAI';
 import axios, { AxiosResponse } from '@ohos/axios'
-import { Completions } from './AsyncCall';
+import { CommonTool } from './CommonTool';
 
 interface IEmbeddingParams {
   input: string | string[] | number[] | number[][]
@@ -43,9 +43,9 @@ export class Embeddings {
     return new Promise<CreateEmbeddingResponse>((resolve, reject) => {
       let url: string = null
       if (data.model && this._client.baseURL.indexOf("openai.azure.com") >= 0 && !this._client.baseURL.endsWith(data.model)) {
-        url = `${this._client.baseURL}/deployments/${data.model}/embeddings${Completions.encodeUrlParams(this._client.params)}`
+        url = `${this._client.baseURL}/deployments/${data.model}/embeddings${CommonTool.encodeUrlParams(this._client.params)}`
       } else {
-        url = `${this._client.baseURL}/embeddings${Completions.encodeUrlParams(this._client.params)}`
+        url = `${this._client.baseURL}/embeddings${CommonTool.encodeUrlParams(this._client.params)}`
       }
       let timeout = 300;
       if (data.timeout) {

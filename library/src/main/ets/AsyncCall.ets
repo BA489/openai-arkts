@@ -2,6 +2,7 @@ import axios, { AxiosHeaders, AxiosInstance, AxiosResponse } from '@ohos/axios'
 import { ChatCompletion } from './ChatCompletion'
 import { ChatCompletionChunk } from './ChatCompletionChunk'
 import { IChatCompletionMessageParam } from './ChatCompletionMessageParam'
+import { CommonTool } from './CommonTool'
 import {
   ChatCompletionFunctionCallOptionParam,
   ChatCompletionNamedToolChoiceParam,
@@ -40,7 +41,7 @@ export interface IChatCompletionPostData {
   timeout?: number
 }
 
-export class Completions {
+export class ChatCompletions {
   _client: RequestConfig
 
   constructor(_client: RequestConfig) {
@@ -115,16 +116,6 @@ export class Completions {
     return JSON.stringify(postData);
   }
 
-  public static encodeUrlParams(params: {}): string {
-    let paramsArry = []
-    if (params) {
-      for (let key in params) {
-        paramsArry.push(`${key}=${params[key]}`)
-      }
-    }
-    return `?${paramsArry.join("&")}`;
-  }
-
   create(
     data: IChatCompletionPostData
   ): Promise<ChatCompletion | ChatCompletionChunk[]> {
@@ -133,16 +124,16 @@ export class Completions {
 
       let url: string = null
       if (data.model && this._client.baseURL?.indexOf("openai.azure.com") >= 0 && !this._client.baseURL.endsWith(data.model)) {
-        url = `${this._client.baseURL}/deployments/${data.model}/chat/completions${Completions.encodeUrlParams(this._client.params)}`
+        url = `${this._client.baseURL}/deployments/${data.model}/chat/completions${CommonTool.encodeUrlParams(this._client.params)}`
       } else {
-        url = `${this._client.baseURL}/chat/completions${Completions.encodeUrlParams(this._client.params)}`
+        url = `${this._client.baseURL}/chat/completions${CommonTool.encodeUrlParams(this._client.params)}`
       }
       let timeout = 300;
       if (data.timeout) {
         timeout = data.timeout
       }
 
-      let jsonStr = Completions.parseDataToJson(data);
+      let jsonStr = ChatCompletions.parseDataToJson(data);
       axios.request<string|ChatCompletion, AxiosResponse<string|ChatCompletion>>({
         method: "post",
         url: url,
@@ -209,16 +200,16 @@ export class RawResponseCompletions {
     return new Promise<RawResponse>((resolve, reject) => {
       let url: string = null
       if (data.model && this._client.baseURL.indexOf("openai.azure.com") >= 0 && !this._client.baseURL.endsWith(data.model)) {
-        url = `${this._client.baseURL}/deployments/${data.model}/chat/completions${Completions.encodeUrlParams(this._client.params)}}`
+        url = `${this._client.baseURL}/deployments/${data.model}/chat/completions${CommonTool.encodeUrlParams(this._client.params)}}`
       } else {
-        url = `${this._client.baseURL}/chat/completions${Completions.encodeUrlParams(this._client.params)}`
+        url = `${this._client.baseURL}/chat/completions${CommonTool.encodeUrlParams(this._client.params)}`
       }
       let timeout = 300;
       if (data.timeout) {
         timeout = data.timeout
       }
 
-      let jsonStr = Completions.parseDataToJson(data);
+      let jsonStr = ChatCompletions.parseDataToJson(data);
       axios.request<string, AxiosResponse<string>>({
         method: "post",
         url: url,
@@ -259,11 +250,11 @@ export class RawResponseCompletions {
 }
 
 export class Chat {
-  completions: Completions
+  completions: ChatCompletions
 
   constructor(_client: RequestConfig) {
     if (_client) {
-      this.completions = new Completions(_client)
+      this.completions = new ChatCompletions(_client)
     }
 
   }

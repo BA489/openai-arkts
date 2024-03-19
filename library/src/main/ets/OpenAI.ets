@@ -1,5 +1,6 @@
 import axios, { AxiosHeaders, AxiosInstance } from '@ohos/axios'
 import { Chat } from './AsyncCall'
+import { Completions } from './Completions'
 import { Embeddings } from './Embeddings'
 
 const DEFAULT_MAX_RETRIES: number = 2
@@ -31,19 +32,20 @@ export class RequestConfig {
 }
 
 class BaseClient {
-  api_version: string
-  base_url: string
-  max_retries: number
-  timeout: number
+  private api_version: string
+  private base_url: string
+  private max_retries: number
+  private timeout: number
   //transport: Transport | None = None,
   //proxies: ProxiesTypes | None = None,
   //limits: Limits | None = None,
   private http_client?: RequestConfig
-  custom_headers?: {}
-  custom_query?: {}
-  api_key: string
+  private custom_headers?: {}
+  private custom_query?: {}
+  private api_key: string
   chat: Chat
   embeddings: Embeddings
+  completions: Completions
 
   //_strict_response_validation: bool,
 
@@ -80,6 +82,7 @@ class BaseClient {
     this.custom_query = custom_query;
     this.chat = new Chat(this.http_client);
     this.embeddings = new Embeddings(this.http_client);
+    this.completions = new Completions(this.http_client)
   }
 
   _build_request() {
@@ -104,14 +107,10 @@ export class OpenAI extends BaseClient {
     if (!base_url)
       base_url = "https://api.openai.com/v1"
     super(api_key, undefined, base_url, max_retries, timeout, custom_headers, custom_query)
-
-    this.api_key = api_key
     if (organization) {
       this.organization = organization
     }
 
-
-    this.base_url = base_url
   }
 }
 
@@ -151,8 +150,6 @@ export class AzureOpenAI extends BaseAzureClient {
       custom_query = { "api-version": api_version }
     }
     super(api_key, api_version, base_url, max_retries, timeout, custom_headers, custom_query)
-
-    this.api_key = api_key
 
   }
 }

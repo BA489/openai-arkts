@@ -3,6 +3,7 @@
     "pages/Index",
     "pages/EmbeddingPage",
     "pages/ChatCompletionPage",
-    "pages/AzureChatCompletionPage"
+    "pages/AzureChatCompletionPage",
+    "pages/CompletionPage"
   ]
 }

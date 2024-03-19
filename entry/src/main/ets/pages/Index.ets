@@ -44,6 +44,15 @@ struct Index {
             })
           })
           .margin(10)
+        Button("Completion")
+          .width("80%")
+          .height(60)
+          .onClick((evt)=>{
+            router.pushUrl({
+              url:"pages/CompletionPage"
+            })
+          })
+          .margin(10)
       }
       .width('100%')
     }
