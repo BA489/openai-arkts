@@ -124,7 +124,7 @@ import { OpenAI } from '@changwei/openai'
 openaiClient: OpenAI = new OpenAI(
     "your sk-xxx"
 )
-openaiClient.chat.completions.create(
+openaiClient.chat.completions.with_raw_response.create(
     {
         messages: [
             {
