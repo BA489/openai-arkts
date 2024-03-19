@@ -9,6 +9,7 @@ struct CompletionPage {
    OpenAIConfig.apiKey
   )
   @State completionContent: string = ''
+  @State inputText:string=''
 
   build() {
     Row() {
@@ -20,12 +21,15 @@ struct CompletionPage {
         TextInput()
           .width('100%')
           .margin(15)
+          .onChange((val)=>{
+            this.inputText=val;
+          })
         Button('提交')
           .width('80%')
           .onClick((evt) => {
             this.openaiClient.completions.create({
               model: "gpt-3.5-turbo-instruct",
-              prompt: "Say this is a test",
+              prompt: this.inputText,
               max_tokens: 7,
               temperature: 0
             })

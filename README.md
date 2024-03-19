@@ -3,6 +3,7 @@
 #### 介绍
 OpenAI SDK鸿蒙原生版，采用ArkTS编写，支持ChatCompletiong,Embedding等接口实现，调用方式和python SDK一致
 
+[观看演示视频](https://www.ixigua.com/7347279931354645026)
 ## 下载安装
 
 ```javascript
@@ -144,6 +145,16 @@ openaiClient.chat.completions.with_raw_response.create(
 
 ```
 
+#### Completion API 文本补全
+```typescript
+openaiClient.completions.create({
+              model: "gpt-3.5-turbo-instruct",
+              prompt: "Say this is a test",
+              max_tokens: 7,
+              temperature: 0
+            })
+```
+
 ## 约束与限制
 
 在下述版本验证通过：
@@ -159,7 +170,7 @@ DevEco Studio: 4.0.0.600, SDK: API9
 
 ## 联系我
 
-B站 @[Changwei同学](https://space.bilibili.com/395257724)  
+B站 @[Changwei同学](https://space.bilibili.com/395257724)
 
 抖音/西瓜 @梦断代码
 
