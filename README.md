@@ -1,26 +1,26 @@
 # openai-arkts
 
-#### 介绍
-OpenAI SDK鸿蒙原生版，采用ArkTS编写，支持ChatCompletiong,Embedding等接口实现，调用方式和python SDK一致
+#### Introduction
+OpenAI SDK Hongmeng native version, written in ArkTS, supports ChatCompletiong, Embedding and other interface implementation, the calling method is the same as the python SDK
 
-[观看演示视频](https://www.ixigua.com/7347279931354645026)
-## 下载安装
+[Watch the demo video] (https://www.ixigua.com/7347279931354645026 )
+## Download and install
 
 ```javascript
 ohpm install @changwei/openai
 ```
 
-OpenHarmony ohpm 环境配置等更多内容，请参考[如何安装 OpenHarmony ohpm 包](https://gitee.com/openharmony-tpc/docs/blob/master/OpenHarmony_har_usage.md)
+For more information about the OpenHarmony ohpm environment configuration, please refer to [How to install the OpenHarmony ohpm package] (https://gitee.com/openharmony-tpc/docs/blob/master/OpenHarmony_har_usage.md )
 
 
 
-## 接口和属性列表
+## Interface and attribute list
 
-可以在 platform.openai.com 上找到 REST API 文档。
-如果使用Azure OpenAI服务，请访问：https://learn.microsoft.com/en-us/azure/ai-services/openai/chatgpt-quickstart
+Can be in platform.openai.com Find the REST API documentation on.
+If you use Azure OpenAI service, please visit:https://learn.microsoft.com/en-us/azure/ai-services/openai/chatgpt-quickstart
 
 
-## 使用方法
+## How to use
 
 #### 使用openai.com API
 
@@ -42,7 +42,7 @@ openaiClient.chat.completions.create(
     }
 )
 ```
-#### 使用Azure OpenAI 聊天API
+#### Use Azure OpenAI Chat API
 
 ```typescript
 import { AzureOpenAI } from '@changwei/openai'
@@ -68,8 +68,8 @@ openaiClient.chat.completions.create(
 ```
 
 
-#### 流式接口
-因为目前axios还不支持SSE模式，此处流式实现有延时。此处以openai.com接口调用为例
+#### Streaming interface
+Because axios currently does not support SSE mode, there is a delay in streaming implementation here.Here is openai.com interface call as an example
 ```typescript
 import { OpenAI,ChatCompletionChunk } from '@changwei/openai'
 
@@ -105,7 +105,7 @@ openaiClient.chat.completions.create(
 
 ```
 
-#### Embedding接口
+#### Embedding interface
 ```typescript
  import { OpenAI } from '@changwei/openai'
 
@@ -118,7 +118,7 @@ openaiClient.embeddings.create({
               })
 ```
 
-#### 访问原始响应数据（例如header）
+#### Access the original response data (such as header)
 ```typescript
 import { OpenAI } from '@changwei/openai'
 
@@ -145,7 +145,7 @@ openaiClient.chat.completions.with_raw_response.create(
 
 ```
 
-#### Completion API 文本补全
+#### Completion API Text Completion
 ```typescript
 openaiClient.completions.create({
               model: "gpt-3.5-turbo-instruct",
@@ -155,23 +155,23 @@ openaiClient.completions.create({
             })
 ```
 
-## 约束与限制
+## Constraints and restrictions
 
-在下述版本验证通过：
+Verified in the following version：
 DevEco Studio: 4.0.0.600, SDK: API9
 
-## 贡献代码
+## Contribute code
 
-使用过程中发现任何问题都可以提[Issue](https://gitee.com/changweizhang/ChatUI/issues) 给我 。
+If you find any problems during use, you can mention [Issue] (https://gitee.com/changweizhang/ChatUI/issues ) Give it to me.
 
-## 开源协议
+## Open source protocol
 
-本项目基于 [MIT](https://gitee.com/openharmony-sig/axios/blob/master/LICENSE) ，请自由地享受和参与开源。
+This project is based on [MIT] (https://gitee.com/openharmony-sig/axios/blob/master/LICENSE ), please enjoy and participate in open source freely.
 
-## 联系我
+## Contact me
 
-B站 @[Changwei同学](https://space.bilibili.com/395257724)
+Station B @[Changwei Classmate] (https://space.bilibili.com/395257724 )
 
-抖音/西瓜 @梦断代码
+Douyin/Watermelon @梦断code
 
-**求点赞 求关注 求分享**
+**Seeking likes, seeking attention, seeking sharing**
