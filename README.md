@@ -1,7 +1,7 @@
 # openai-arkts
 
 #### Introduction
-OpenAI SDK Hongmeng native version, written in ArkTS, supports ChatCompletiong, Embedding and other interface implementation, the calling method is the same as the python SDK
+OpenAI SDK HarmonyOS native version (HarmonyOS NEXT API 11), written in ArkTS, supports ChatCompletiong, Embedding and other interface implementation, the calling method is the same as the python SDK
 
 [Watch the demo video] (https://www.ixigua.com/7347279931354645026 )
 ## Download and install
